@@ -3,7 +3,7 @@ Author: TEAM5
 
 -->
 <!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
 	<title>Hotel Website | Gallery</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
@@ -12,6 +12,7 @@ Author: TEAM5
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 </head>
 <body>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <!---start-Wrap--->
 <!---start-header--->
 <div class="header">
@@ -19,10 +20,13 @@ Author: TEAM5
 		<div class="header-top">
 			<div class="logo">
 				<a href="homepage.html"><h2 style="font-family:Sofia,sans-serif; font-size:50px;">Restolist</h2></a>
+				<a href="login.html" style="margin-left: 600%;"><button style='font-size:24px;color: #18d26e'>Back <i class='fas fa-chevron-circle-left'></i></button></a>
 			</div>
 			<div class="contact-info">
+
 				<p class="phone">Call us : <a href="#">9860767468</a></p>
 				<p class="gpa">Gpa : <a href="https://goo.gl/maps/kunb7UF9N1BVKJaB9">View map</a></p>
+                <p id="emailId" ></p>
 			</div>
 			<div class="clear"> </div>
 		</div>
@@ -33,7 +37,7 @@ Author: TEAM5
 				<li><a href="gallery.html">Home</a></li>
 				<li><a href="about.html">About</a></li>
 				<li class="active"><a href="gallery.html">Restaurants</a></li>
-				<li><a href="#">View bookings</a></li>
+				<li><a href="bookingdetails.html">View bookings</a></li>
 				<li><a href="login.html">logout</a></li>
 				<div class="clear"> </div>
 			</ul>
@@ -48,54 +52,81 @@ Author: TEAM5
 		<!----start-image-gallery----->
 		<div class="gallerys">
 			<h3>gallery</h3>
-			<div class="gallery-grids">
+			<!--<div class="gallery-grids">
 				<div class="gallery-grid">
-					<a href="images/slider1.jpg"><img src="images/slider1.jpg" alt=""></a>
+					<img id="img1" src="">
 					<h4>A2B restuarant</h4>
 					<p>Description</p>
-					<div class="gallery-button"><a href="booking.html">Book A Table</a></div>
+
 				</div>
 				<div class="gallery-grid grid2">
 					<a href="images/slider4.jpg"><img src="images/slider4.jpg" alt=""></a>
 					<h4>coal barbeque</h4>
 					<p>Description</p>
-					<div class="gallery-button"><a href="booking.html">Book A Table</a></div>
+				&lt;!&ndash;	<div class="gallery-button"><a href="booking.html">Book A Table</a></div>&ndash;&gt;
 				</div>
 				<div class="gallery-grid">
 					<a href="images/slider5.jpg"><img src="images/slider5.jpg" alt=""></a>
 					<h4>NH7 refuel</h4>
 					<p>Description</p>
-					<div class="gallery-button"><a href="booking.html">Book A Table</a></div>
-				</div>
+					&lt;!&ndash;<div class="gallery-button"><a href="booking.html">Book A Table</a></div>&ndash;&gt;
+				</div>-->
 				<div class="clear"> </div>
 			</div>
 			<div class="clear"> </div>
-			<div class="gallery-grids">
+			<section class="product">
+			<div id="imagesList" class="box-container"> </div></section></br></br>
+			<!--<div class="gallery-grids">
 				<div class="gallery-grid">
 					<a href="images/slider7.jpg"><img src="images/slider7.jpg" alt=""></a>
 					<h4>dakskin</h4>
 					<p> Description</p>
-					<div class="gallery-button"><a href="booking.html">Book A Table</a></div>
+					&lt;!&ndash;<div class="gallery-button"><a href="booking.html">Book A Table</a></div>&ndash;&gt;
 				</div>
 				<div class="gallery-grid grid2">
 					<a href="images/slider6.jpg"><img src="images/slider6.jpg" alt=""></a>
 					<h4>bazaar</h4>
 					<p>Description</p>
-					<div class="gallery-button"><a href="booking.html">Book A Table</a></div>
+					&lt;!&ndash;<div class="gallery-button"><a href="booking.html">Book A Table</a></div>&ndash;&gt;
 				</div>
 				<div class="gallery-grid">
 					<a href="images/slider8.jpg"><img src="images/slider8.jpg" alt=""></a>
 					<h4>krishna sagar</h4>
 					<p>Description</p>
-					<div class="gallery-button"><a href="booking.html">Book A Table</a></div>
-				</div>
+					&lt;!&ndash;<div class="gallery-button"><a href="booking.html">Book A Table</a></div>&ndash;&gt;
+				</div>-->
+				<div><a class="text3" href="booking.html">Book A Table</a></div>
 			</div>
 			<script type="text/javascript" src="js/jquery.lightbox.js"></script>
 			<link rel="stylesheet" type="text/css" href="css/lightbox.css" media="screen">
 			<script type="text/javascript">
-				<!--$(function() {
-					$('.gallery-grid a').lightBox();
-				});-->
+				fetch("http://localhost:8085/imageList")
+						.then(res=> res.json())
+						.then(data=>{
+
+							if(data.length > 0){
+								var temp = "";
+
+								data.forEach((u)=>{
+
+
+									temp +="<div class='box'>";
+									temp +=	"<img src=\"data:image/png;base64,"
+									temp += u.imageString+"\"";
+									temp += ">";
+									temp +=	"<h4 class='text1'>" + u.resname + "</h4>";
+									temp +=	"<h4 class='text2'><strong>Location : </strong>"+u.resplace+ "</h4>";
+									temp +=	"<h4 class='text2'><strong>Table Price : </strong>" +u.resprice+ "</h4>";
+									temp +=	"</div>";
+								})
+								document.getElementById("imagesList").innerHTML=temp;
+							}
+						});
+
+
+
+				console.log("hello");
+				document.getElementById("emailId").innerHTML="Welcome - "+sessionStorage.getItem("user");
 			</script>
 			<div class="clear"> </div>
 			<div class="projects-bottom-paination">
